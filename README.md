@@ -46,7 +46,6 @@ Jalankan script utamanya dengan mengetik:
 ```bash
 python main.py
 ```
-*(Gunakan `python3 main.py` jika Anda menggunakan macOS/Linux dan tidak menggunakan virtual environment)*
 
 ## Cara Penggunaan Fitur
 

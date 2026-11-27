@@ -1,6 +1,5 @@
 import cv2
 
-
 def fit_size(width, height, max_width, max_height):
     scale = min(max_width / width, max_height / height)
     return max(1, round(width * scale)), max(1, round(height * scale))

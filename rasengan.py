@@ -1,7 +1,6 @@
 import argparse
 import math
 import time
-
 import cv2
 import mediapipe as mp
 import numpy as np

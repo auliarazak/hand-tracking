@@ -44,7 +44,6 @@ if not cap.isOpened():
         segmenter.close()
     raise SystemExit('Kamera tidak dapat dibuka. Periksa perangkat dan izin kamera.')
 
-# Generate Galaxy Background
 galaxy_bg = np.zeros((1080, 1920, 3), dtype=np.uint8) 
 galaxy_bg[:] = (30, 10, 40) # Space purple
 for _ in range(800):
