@@ -224,7 +224,6 @@ def render_portal(img, points, filter_name, mask_person, frame_galaxy):
             cv2.circle(img, (px, py), np.random.randint(1, 4), (0, 255, 255), -1)
 
 def hand_is_fist(hand, width, height):
-    # Compare fingertip-to-wrist distance to knuckle-to-wrist distance.
     wrist = np.array([hand[0].x * width, hand[0].y * height])
     def distance(index):
         return np.linalg.norm(np.array([hand[index].x * width, hand[index].y * height]) - wrist)
@@ -243,7 +242,6 @@ try:
     img = cv2.flip(img, 1)
     h, w, c = img.shape
     
-    # Crop galaxy bg to match frame size dynamically
     frame_galaxy = cv2.resize(galaxy_bg, (w, h)) if h > galaxy_bg.shape[0] or w > galaxy_bg.shape[1] else galaxy_bg[:h, :w]
 
     img_rgb = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
@@ -266,7 +264,6 @@ try:
     change_filter = False
 
     if results.hand_landmarks:
-        # Cek gestur untuk ganti filter
         if len(results.hand_landmarks) >= 2:
             idx0 = results.hand_landmarks[0][8]
             idx1 = results.hand_landmarks[1][8]
@@ -278,12 +275,10 @@ try:
             if palm > 0 and math.hypot(pt0[0]-pt1[0], pt0[1]-pt1[1]) < palm * 0.4:
                 change_filter = True
                 
-        # Ambang relatif terhadap lebar telapak tangan agar tahan perubahan resolusi.
         for hand_lms in results.hand_landmarks:
             thumb = hand_lms[4]
             tx, ty = int(thumb.x * w), int(thumb.y * h)
                 
-            # Gestur ganti filter cadangan (Jempol & Kelingking)
             pinky = hand_lms[20]
             px, py = int(pinky.x * w), int(pinky.y * h)
             palm = math.hypot((hand_lms[5].x - hand_lms[17].x) * w,
@@ -320,7 +315,6 @@ try:
             render_portal(img, first[:3] + list(reversed(second[:3])),
                           filter_name, mask_person, frame_galaxy)
             next_filter = filters[(current_filter + 1) % len(filters)]
-            # Galaxy needs a mask; prepare it when used on either surface.
             render_portal(img, first[2:] + list(reversed(second[2:])),
                           next_filter, mask_person, frame_galaxy)
         elif len(hands) == 2:
